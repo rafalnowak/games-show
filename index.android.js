@@ -6,6 +6,7 @@ import {
   ListView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableHighlight,
   View
 } from 'react-native';
@@ -60,7 +61,7 @@ var gamesMock = [
   }
 ];
 
-class GamesShow extends Component {
+class GamesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,7 +84,6 @@ class GamesShow extends Component {
     if (!this.state.loaded) {
       return this.renderLoadingView();
     }
-
     return (
       <ListView
         dataSource={this.state.dataSource}
@@ -117,7 +117,22 @@ class GamesShow extends Component {
   }
 }
 
+class GamesShow extends Component {
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <TextInput
+          style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
+        <GamesList/>
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
+  mainScreen: {
+    flex: 1
+  },
   container: {
     flex: 1,
     flexDirection: 'row',
