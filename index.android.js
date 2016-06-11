@@ -11,55 +11,7 @@ import {
   View
 } from 'react-native';
 
-import { GameElement } from "./GameElement"
-
-var gamesMock = [
-  {
-    name: 'Stellaris',
-    platform: 'PC',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  },
-  {
-    name: 'The Witcher 3',
-    platform: 'PS4',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  },
-  {
-    name: 'GTA V',
-    platform: 'PS4',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  },
-  {
-    name: 'Hearts of Iron IV',
-    platform: 'PC',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  },
-  {
-    name: 'Metal Gear Solid V',
-    platform: 'PS4',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  },
-  {
-    name: 'The Journey',
-    platform: 'PS4',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  },
-  {
-    name: 'Something something',
-    platform: 'PS4',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  },
-  {
-    name: 'Mortal Kombat X',
-    platform: 'PS4',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  },
-  {
-    name: 'The Last Of Us',
-    platform: 'PS4',
-    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Harry_Whittier_Frees_-_What%27s_Delaying_My_Dinner.jpg'
-  }
-];
+import { GameElement } from "./GameElement";
 
 var IGDB_API_KEY = 'TOKEN';
 var REQUEST_URL = 'https://www.igdb.com/api/v1/games/search?q=';
@@ -98,6 +50,9 @@ class GamesList extends Component {
           loaded: true,
         });
       })
+      .catch((error => {
+        console.log(error);
+      }))
       .done();
   }
 
