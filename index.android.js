@@ -11,87 +11,7 @@ import {
   View
 } from 'react-native';
 
-import { GameElement } from "./GameElement";
-
-var IGDB_API_KEY = 'TOKEN';
-var REQUEST_URL = 'https://www.igdb.com/api/v1/games/search?q=';
-
-class GamesList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
-      loaded: false,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows([]),
-      loaded: true
-    });
-  }
-
-  componentWillReceiveProps() {
-    fetch(REQUEST_URL + this.props.filterText, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Token token="' + IGDB_API_KEY +  '"'
-        }
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        var games = responseData.games
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(games),
-          loaded: true,
-        });
-      })
-      .catch((error => {
-        console.log(error);
-      }))
-      .done();
-  }
-
-  render() {
-    if (!this.state.loaded) {
-      return this.renderLoadingView();
-    }
-    return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderGame}/>
-    );
-  }
-
-  renderLoadingView() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.loading}>
-          Loading...
-        </Text>
-      </View>
-    );
-  }
-
-  renderGame(game) {
-    return (
-      <TouchableHighlight onPress={() => Alert.alert(
-            'Game details',
-            game.name + ' - ' + game.platform,
-            [
-              {text: 'OK', onPress: () => console.log('OK Pressed!')},
-            ]
-          )}>
-        <View>
-          <GameElement game={game}/>
-        </View>
-      </TouchableHighlight>);
-  }
-}
+import { GamesList } from "./GamesList";
 
 class GamesShow extends Component {
   constructor(props) {
@@ -123,18 +43,6 @@ class GamesShow extends Component {
 const styles = StyleSheet.create({
   mainScreen: {
     flex: 1
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  loading: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
   }
 });
 
