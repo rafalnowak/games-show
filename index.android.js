@@ -61,6 +61,9 @@ var gamesMock = [
   }
 ];
 
+var IGDB_API_KEY = 'TOKEN';
+var REQUEST_URL = 'https://www.igdb.com/api/v1/games/search?q=';
+
 class GamesList extends Component {
   constructor(props) {
     super(props);
@@ -73,11 +76,29 @@ class GamesList extends Component {
   }
 
   componentDidMount() {
-    //todo: fetch data from igdb api, add search bar
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(gamesMock),
+      dataSource: this.state.dataSource.cloneWithRows([]),
       loaded: true
     });
+  }
+
+  componentWillReceiveProps() {
+    fetch(REQUEST_URL + this.props.filterText, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Token token="' + IGDB_API_KEY +  '"'
+        }
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        var games = responseData.games
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(games),
+          loaded: true,
+        });
+      })
+      .done();
   }
 
   render() {
@@ -118,14 +139,29 @@ class GamesList extends Component {
 }
 
 class GamesShow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterText: ''
+    };
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
         <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
-        <GamesList/>
+          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={(text) => this.handleSearchInput(text)}/>
+        <GamesList
+          filterText={this.state.filterText}/>
       </View>
     );
+  }
+
+  handleSearchInput(text) {
+    this.setState({
+      filterText: text
+    });
   }
 }
 
