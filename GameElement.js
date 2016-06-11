@@ -15,7 +15,7 @@ export class GameElement extends Component {
     return(
       <View style={styles.container}>
         <Image
-          source={{uri: game.thumbnail}}
+          source={{uri: game.cover}}
           style={styles.gameThumbnail}/>
         <View style={styles.rightContainer}>
           <Text style={styles.name}>{game.name}</Text>

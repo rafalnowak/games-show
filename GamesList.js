@@ -81,7 +81,7 @@ export class GamesList extends Component {
     return (
       <TouchableHighlight onPress={() => Alert.alert(
             'Game details',
-            game.name + ' - ' + game.platform,
+            `Details screen placeholder for ${game.name}`,
             [
               {text: 'OK', onPress: () => console.log('OK Pressed!')},
             ]
