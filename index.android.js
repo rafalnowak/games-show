@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 import {
   Alert,
   AppRegistry,
-  ListView,
+  Navigator,
   StyleSheet,
   Text,
   TextInput,
-  TouchableHighlight,
   View
 } from 'react-native';
 
@@ -28,6 +27,7 @@ class GamesShow extends Component {
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           onChangeText={(text) => this.handleSearchInput(text)}/>
         <GamesList
+          navigator={this.props.navigator}
           filterText={this.state.filterText}/>
       </View>
     );
@@ -40,10 +40,43 @@ class GamesShow extends Component {
   }
 }
 
+class GameDetails extends Component {
+  render() {
+    return (
+      <View>
+        <Text>Game details</Text>
+      </View>
+    );
+  }
+}
+
+class App extends Component {
+  render() {
+    return (
+      <Navigator
+        initialRoute={{id: 'GamesScreen', name: 'Games Screen'}}
+        renderScene={this.renderScene}/>
+    );
+  }
+
+  renderScene(route, navigator) {
+    switch (route.id) {
+      case 'GamesScreen':
+        return (
+          <GamesShow navigator={navigator}/>
+        );
+      case 'GameDetails':
+        return (
+          <GameDetails navigator={navigator}/>
+        );
+    }
+  }
+}
+
 const styles = StyleSheet.create({
   mainScreen: {
     flex: 1
   }
 });
 
-AppRegistry.registerComponent('GamesShow', () => GamesShow);
+AppRegistry.registerComponent('GamesShow', () => App);

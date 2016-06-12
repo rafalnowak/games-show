@@ -44,6 +44,5 @@ const styles = StyleSheet.create({
   gameThumbnail: {
     width: 53,
     height: 81,
-  },
-
+  }
 });
