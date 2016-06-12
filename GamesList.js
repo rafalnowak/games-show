@@ -23,18 +23,20 @@ export class GamesList extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      loaded: false,
+      isLoading: false,
     };
   }
 
   componentDidMount() {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows([]),
-      loaded: true
+      dataSource: this.state.dataSource.cloneWithRows([])
     });
   }
 
   componentWillReceiveProps() {
+    this.setState({
+      isLoading: true
+    });
     fetch(REQUEST_URL + this.props.filterText, {
         method: 'GET',
         headers: {
@@ -47,7 +49,7 @@ export class GamesList extends Component {
         var games = responseData.games
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(games),
-          loaded: true,
+          isLoading: false,
         });
       })
       .catch((error => {
@@ -57,14 +59,15 @@ export class GamesList extends Component {
   }
 
   render() {
-    if (!this.state.loaded) {
+    if (this.state.isLoading) {
       return this.renderLoadingView();
+    } else {
+      return (
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderGame}/>
+      );
     }
-    return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderGame}/>
-    );
   }
 
   renderLoadingView() {
