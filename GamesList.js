@@ -35,7 +35,7 @@ export class GamesList extends Component {
   }
 
   componentWillReceiveProps() {
-    fetch(`REQUEST_URL${this.props.filterText}`, {
+    fetch(REQUEST_URL + this.props.filterText, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
