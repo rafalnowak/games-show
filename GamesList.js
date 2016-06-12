@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 
 import { GameElement } from "./GameElement";
+import { IGDB_API_KEY } from "./apikey"
 
-var IGDB_API_KEY = 'TOKEN';
 var REQUEST_URL = 'https://www.igdb.com/api/v1/games/search?q=';
 
 export class GamesList extends Component {
