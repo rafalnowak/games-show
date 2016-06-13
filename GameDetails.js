@@ -7,7 +7,8 @@ import {
   View
 } from 'react-native';
 
-import { GamesApiClient } from "./GamesApiClient"
+import { GamesApiClient } from "./GamesApiClient";
+import { LoadingView } from "./LoadingView";
 
 export class GameDetails extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export class GameDetails extends Component {
       var game = this.state.game;
       return (
         <View>
-          <View style={styles.container}>
+          <View style={styles.containerTop}>
             <Image
               source={{uri: "https://" + game.cover.url}}
               style={styles.gameThumbnail}/>
@@ -44,52 +45,56 @@ export class GameDetails extends Component {
               <Text style={styles.name}>{game.name}</Text>
             </View>
           </View>
-          <Text>
-            {game.summary}
-          </Text>
+          <View style={styles.containerBottom}>
+            <Text style={styles.summary}>
+              {game.summary}
+            </Text>
+          </View>
         </View>
       );
     } else {
-      return (this.renderLoadingView());
+      return (
+        <LoadingView/>
+      );
     }
-  }
-
-  //TODO: reuse it with games list component
-  renderLoadingView() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.loading}>
-          Loading...
-        </Text>
-      </View>
-    );
   }
 }
 
 //TODO: reuse it with games list component
 const styles = StyleSheet.create({
-  container: {
+  loading: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  containerTop: {
+    marginTop: 25,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: '#F5FCFF',
   },
   rightContainer: {
     flex: 1
   },
   name: {
-    fontSize: 20,
+    fontSize: 19,
     marginBottom: 8,
     textAlign: 'center',
   },
   gameThumbnail: {
-    width: 53,
-    height: 81,
-  },
-  loading: {
-    fontSize: 20,
-    textAlign: 'center',
+    width: 90,
+    height: 90,
     margin: 10,
+  },
+  containerBottom: {
+    flex: 1
+  },
+  summary: {
+    marginTop: 30,
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 16,
+    textAlign: 'justify'
   }
 });

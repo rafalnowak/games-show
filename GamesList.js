@@ -10,6 +10,7 @@ import {
 
 import { GamesApiClient } from "./GamesApiClient"
 import { GameElement } from "./GameElement";
+import { LoadingView } from "./LoadingView";
 
 export class GamesList extends Component {
   constructor(props) {
@@ -51,7 +52,9 @@ export class GamesList extends Component {
 
   render() {
     if (this.state.isLoading) {
-      return this.renderLoadingView();
+      return (
+        <LoadingView/>
+      );
     } else {
       return (
         <ListView
@@ -59,16 +62,6 @@ export class GamesList extends Component {
           renderRow={this.renderGame.bind(this)}/>
       );
     }
-  }
-
-  renderLoadingView() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.loading}>
-          Loading...
-        </Text>
-      </View>
-    );
   }
 
   goToDetailsScreen(game) {
@@ -96,10 +89,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  loading: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
   }
 });
