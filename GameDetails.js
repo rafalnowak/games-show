@@ -7,9 +7,7 @@ import {
   View
 } from 'react-native';
 
-import { IGDB_API_KEY } from "./apikey"
-
-var REQUEST_URL = 'https://www.igdb.com/api/v1/games/';
+import { GamesApiClient } from "./GamesApiClient"
 
 export class GameDetails extends Component {
   constructor(props) {
@@ -24,32 +22,18 @@ export class GameDetails extends Component {
   }
 
   fetchData() {
-    //TODO: create igdb client module
-    fetch(REQUEST_URL + this.props.game.id, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Token token="' + IGDB_API_KEY +  '"'
-        }
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        var game = responseData.game;
-        this.setState({
-          game: game,
-          loaded: true,
-        });
-      })
-      .catch((error => {
-        console.log(error);
-      }))
-      .done();
+    var gamesApiClient = new GamesApiClient();
+    gamesApiClient.getGameById(this.props.game.id, (game) => {
+      this.setState({
+        game: game,
+        loaded: true,
+      });
+    })
   }
 
   render() {
     if (this.state.loaded) {
       var game = this.state.game;
-      console.log("url: " + game.cover.url);
       return (
         <View>
           <View style={styles.container}>

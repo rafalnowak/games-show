@@ -8,11 +8,8 @@ import {
   View
 } from 'react-native';
 
+import { GamesApiClient } from "./GamesApiClient"
 import { GameElement } from "./GameElement";
-import { IGDB_API_KEY } from "./apikey"
-
-//TODO: create igdb client class
-var REQUEST_URL = 'https://www.igdb.com/api/v1/games/search?q=';
 
 export class GamesList extends Component {
   constructor(props) {
@@ -35,25 +32,14 @@ export class GamesList extends Component {
     this.setState({
       isLoading: true
     });
-    fetch(REQUEST_URL + this.props.filterText, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Token token="' + IGDB_API_KEY +  '"'
-        }
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        var games = responseData.games
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(games),
-          isLoading: false,
-        });
-      })
-      .catch((error => {
-        console.log(error);
-      }))
-      .done();
+    console.log("searching for " + this.props.filterText);
+    var gamesApiClient = new GamesApiClient();
+    gamesApiClient.searchForGames(this.props.filterText, (games) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(games),
+        isLoading: false,
+      });
+    });
   }
 
   render() {
