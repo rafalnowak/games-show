@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
 import {
-  Alert,
-  AppRegistry,
   ListView,
-  Navigator,
   StyleSheet,
   Text,
   TouchableHighlight,

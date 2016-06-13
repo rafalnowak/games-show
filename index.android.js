@@ -1,69 +1,40 @@
 import React, { Component } from 'react';
 
 import {
-  Alert,
   AppRegistry,
-  Navigator,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
+  BackAndroid,
+  Navigator
 } from 'react-native';
 
-import { GamesList } from "./GamesList";
+import { SearchableGamesList } from "./SearchableGamesList";
+import { GameDetails } from "./GameDetails";
 
-class GamesShow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      filterText: ''
-    };
-  }
+var _navigator = null;
 
-  render() {
-    return (
-      <View style={{flex: 1}}>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.handleSearchInput(text)}/>
-        <GamesList
-          navigator={this.props.navigator}
-          filterText={this.state.filterText}/>
-      </View>
-    );
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator.getCurrentRoutes().length === 1  ) {
+     return false;
+  } else {
+    _navigator.pop();
+    return true;
   }
-
-  handleSearchInput(text) {
-    this.setState({
-      filterText: text
-    });
-  }
-}
-
-class GameDetails extends Component {
-  render() {
-    return (
-      <View>
-        <Text>Game details</Text>
-      </View>
-    );
-  }
-}
+});
 
 class App extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{id: 'GamesScreen', name: 'Games Screen'}}
+        initialRoute={{id: 'GamesScreen'}}
         renderScene={this.renderScene}/>
     );
   }
 
   renderScene(route, navigator) {
+    _navigator = navigator; //TODO: ugly global :(
     switch (route.id) {
       case 'GamesScreen':
         return (
-          <GamesShow navigator={navigator}/>
+          <SearchableGamesList navigator={navigator}/>
         );
       case 'GameDetails':
         return (
@@ -72,11 +43,5 @@ class App extends Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  mainScreen: {
-    flex: 1
-  }
-});
 
 AppRegistry.registerComponent('GamesShow', () => App);
