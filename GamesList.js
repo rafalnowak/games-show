@@ -28,18 +28,25 @@ export class GamesList extends Component {
     });
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       isLoading: true
     });
-    console.log("searching for " + this.props.filterText);
-    var gamesApiClient = new GamesApiClient();
-    gamesApiClient.searchForGames(this.props.filterText, (games) => {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(games),
-        isLoading: false,
+    var filterText = nextProps.filterText;
+    if (filterText.length > 0) {
+      var gamesApiClient = new GamesApiClient();
+      gamesApiClient.searchForGames(filterText, (games) => {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(games),
+          isLoading: false,
+        });
       });
-    });
+    } else {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows([]),
+        isLoading: false
+      });
+    }
   }
 
   render() {
