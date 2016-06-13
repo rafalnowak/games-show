@@ -38,7 +38,7 @@ class App extends Component {
         );
       case 'GameDetails':
         return (
-          <GameDetails navigator={navigator}/>
+          <GameDetails navigator={navigator} game={route.data.game}/>
         );
     }
   }

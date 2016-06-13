@@ -8,10 +8,7 @@ import {
 
 export class GameElement extends Component {
   render() {
-    return this.renderGame(this.props.game);
-  }
-
-  renderGame(game) {
+    var game = this.props.game;
     return(
       <View style={styles.container}>
         <Image

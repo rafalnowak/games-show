@@ -77,14 +77,17 @@ export class GamesList extends Component {
     );
   }
 
-  goToDetailsScreen() {
-    console.log('goToDetailsScreen');
-    this.props.navigator.push({id: 'GameDetails'});
+  goToDetailsScreen(game) {
+    this.props.navigator.push({
+      id: 'GameDetails',
+      data: {
+        game: game
+    }});
   }
 
   renderGame(game) {
     return (
-      <TouchableHighlight onPress={this.goToDetailsScreen.bind(this)}>
+      <TouchableHighlight onPress={() => this.goToDetailsScreen(game)}>
         <View>
           <GameElement game={game}/>
         </View>

@@ -7,9 +7,10 @@ import {
 
 export class GameDetails extends Component {
   render() {
+    var game = this.props.game;
     return (
       <View>
-        <Text>Game details</Text>
+        <Text>Game details for {game.name}</Text>
       </View>
     );
   }
