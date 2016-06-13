@@ -12,7 +12,7 @@ import { GameDetails } from "./GameDetails";
 var _navigator = null;
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
-  if (_navigator.getCurrentRoutes().length === 1  ) {
+  if (_navigator && _navigator.getCurrentRoutes().length === 1  ) {
      return false;
   } else {
     _navigator.pop();
