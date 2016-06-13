@@ -11,6 +11,7 @@ import {
 import { GameElement } from "./GameElement";
 import { IGDB_API_KEY } from "./apikey"
 
+//TODO: create igdb client class
 var REQUEST_URL = 'https://www.igdb.com/api/v1/games/search?q=';
 
 export class GamesList extends Component {
