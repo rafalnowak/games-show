@@ -1,49 +1,47 @@
 import React, { Component } from 'react';
 
 import {
-  Alert,
   AppRegistry,
-  ListView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  View
+  BackAndroid,
+  Navigator
 } from 'react-native';
 
-import { GamesList } from "./GamesList";
+import { SearchableGamesList } from "./SearchableGamesList";
+import { GameDetails } from "./GameDetails";
 
-class GamesShow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      filterText: ''
-    };
-  }
+var _navigator = null;
 
-  render() {
-    return (
-      <View style={{flex: 1}}>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.handleSearchInput(text)}/>
-        <GamesList
-          filterText={this.state.filterText}/>
-      </View>
-    );
-  }
-
-  handleSearchInput(text) {
-    this.setState({
-      filterText: text
-    });
-  }
-}
-
-const styles = StyleSheet.create({
-  mainScreen: {
-    flex: 1
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator.getCurrentRoutes().length === 1  ) {
+     return false;
+  } else {
+    _navigator.pop();
+    return true;
   }
 });
 
-AppRegistry.registerComponent('GamesShow', () => GamesShow);
+class App extends Component {
+  render() {
+    return (
+      <Navigator
+        initialRoute={{id: 'GamesScreen'}}
+        renderScene={this.renderScene}/>
+    );
+  }
+
+  renderScene(route, navigator) {
+    _navigator = navigator; //TODO: ugly global :(
+    switch (route.id) {
+      case 'GamesScreen':
+        return (
+          <SearchableGamesList navigator={navigator}/>
+        );
+      case 'GameDetails':
+        return (
+          <GameDetails navigator={navigator}/>
+        );
+    }
+  }
+}
+
+AppRegistry.registerComponent('GamesShow', () => App);

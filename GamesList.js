@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 
 import {
-  Alert,
-  AppRegistry,
   ListView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableHighlight,
   View
 } from 'react-native';
@@ -65,7 +62,7 @@ export class GamesList extends Component {
       return (
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderGame}/>
+          renderRow={this.renderGame.bind(this)}/>
       );
     }
   }
@@ -80,15 +77,14 @@ export class GamesList extends Component {
     );
   }
 
+  goToDetailsScreen() {
+    console.log('goToDetailsScreen');
+    this.props.navigator.push({id: 'GameDetails'});
+  }
+
   renderGame(game) {
     return (
-      <TouchableHighlight onPress={() => Alert.alert(
-            'Game details',
-            `Details screen placeholder for ${game.name}`,
-            [
-              {text: 'OK', onPress: () => console.log('OK Pressed!')},
-            ]
-          )}>
+      <TouchableHighlight onPress={this.goToDetailsScreen.bind(this)}>
         <View>
           <GameElement game={game}/>
         </View>
