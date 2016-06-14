@@ -59,7 +59,7 @@ export class GamesList extends Component {
       return (
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderGame.bind(this)}/>
+          renderRow={(game) => this.renderGame(game)}/>
       );
     }
   }
