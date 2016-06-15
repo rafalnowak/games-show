@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import { GamesApiClient } from "./GamesApiClient"
+import { GameDetails } from "./GameDetails";
 import { GameElement } from "./GameElement";
 import { LoadingView } from "./LoadingView";
 
@@ -67,9 +68,15 @@ export class GamesList extends Component {
   goToDetailsScreen(game) {
     this.props.navigator.push({
       id: 'GameDetails',
+      title: 'Game details',
+      component: GameDetails,
       data: {
         game: game
-    }});
+      },
+      passProps: {
+        game: game
+      }
+    });
   }
 
   renderGame(game) {

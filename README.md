@@ -4,7 +4,7 @@ Pet-project I've created to try and learn React Native capabilities.
 
 It is a simple app with game search capability and navigation between queried games list and game details.
 
-No iOS version - I'll finish it soon as with React Native it should be quite easy :)
+Application works on both Android and iOS.
 
 # API
 
